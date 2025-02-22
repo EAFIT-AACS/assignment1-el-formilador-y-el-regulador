@@ -1,1 +1,15 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Uzapeobl)
+Students names 
+Andres Perez 
+Jeronimo Campuzano 
+
+Class number 7308
+
+OS: Ubuntu 24.04.2 LTS x86_64 
+Programming languages: C++ 
+Compiler version: g++ 13.3.0
+
+
+Running 
+
+
+Explanation
