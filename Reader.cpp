@@ -32,14 +32,10 @@ vector<DFA> Reader::read(string fileRoute)
 
             // set states
             getline(file, line);
+            int numStates = stoi(line);
             vector<string> states;
-            istringstream iss1(line);
-            word;
-
-            while (iss1 >> word)
-            {
-                states.push_back(word);
-            }
+            
+            //     states.push_back(word);
 
             
 
@@ -70,8 +66,9 @@ vector<DFA> Reader::read(string fileRoute)
             // set transitions
             vector<tuple<string, string, string>> transitions;
 
+
             // loop for states
-            for (int k = 0; k < states.size(); k++)
+            for (int k = 0; k < numStates; k++)
             {
 
                 // get the raw line and set it in a vector
@@ -87,11 +84,17 @@ vector<DFA> Reader::read(string fileRoute)
                 //loop for alphabet
                 for (int j = 0; j < alphabet.size(); j++)
                 {   string s(1, alphabet[j]);
-                    tuple<string, string, string> transition = make_tuple(rawTransitions[0], s, rawTransitions[j + 1]);
-                    transitions.push_back(transition);
+                    tuple<string, string, string> insert = make_tuple(rawTransitions[0], s, rawTransitions[j + 1]);
+                    
+                    transitions.push_back(insert);
                 }
+                states.push_back(rawTransitions[0]);
 
             }
+
+
+            //Fill states
+
 
             DFA newDFA = DFA(states, finals, alphabet, transitions);
         }
