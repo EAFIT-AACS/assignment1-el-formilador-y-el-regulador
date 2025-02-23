@@ -23,11 +23,13 @@ vector<char> DFA::getAlphabet()
     return alphabet;
 }
 
-/*
-vector<string> DFA::getEquivalentStates() {
-    return equivalentStates;
+
+void DFA::getEquivalentStates() {
+    cout << "Equivalent States: " << endl;
+    for (int i = 0; i < equivalentStates.size(); i++) {
+        cout << "( " + equivalentStates[i].first + ", " + equivalentStates[i].second + " )" << endl;
+    }
 }
-*/
 
 /*
 vector<tuple<string, string, string>> DFA::getTransition() {
@@ -39,7 +41,7 @@ void DFA::findEquivalentStates()
 {
     vector<pair<string, string>> statePairs;
     // Step 1: Create a vector filled with all the pairs that don't contain EXACTLY
-    // one Acceptance State
+    // one Acceptance State. Both are final or both are not final
     for (int i = 0; i < states.size(); i++)
     {
         for (int j = i + 1; j < states.size(); j++)
@@ -54,6 +56,7 @@ void DFA::findEquivalentStates()
     }
 
     // Paso 2: Eliminar todas las parejas que nos lleven a una pareja marcada tras recibir alguna cadena
+    // Paso 3: Repetir el Paso 2 hasta que no se marquen mas parejas
     vector<pair<string, string>> prevPairs = statePairs;
 
     // Tomar una pareja de 'statePairs', y eliminarla de prevPairs si, al aplicar la transicion, termina en alguna pareja que no este en
@@ -68,9 +71,9 @@ void DFA::findEquivalentStates()
             }
         }
     } while (prevPairs != statePairs);
-    // Paso 3: Repetir el Paso 2 hasta que no se marquen mas parejas
 
     // Paso 4: Llenar el vector del atributo "equivalentStates" con las parejas no marcadas
+    equivalentStates = statePairs;
 }
 
 string DFA::transitionFunction(string state, char symbol) {
@@ -81,4 +84,5 @@ string DFA::transitionFunction(string state, char symbol) {
             return get<2>(transition[i]);
         }
     }
+    return "Error";
 }

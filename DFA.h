@@ -34,7 +34,7 @@ public:
     vector<string> getStates();
     vector<string> getFinals();
     vector<char> getAlphabet();
-    vector<pair<string, string>> getEquivalentStates();
+    void getEquivalentStates();
     vector<tuple<string, string, string>> getTransition();
 
     void findEquivalentStates();

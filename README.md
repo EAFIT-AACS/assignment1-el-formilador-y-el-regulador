@@ -1,15 +1,22 @@
-Students names 
-Andres Perez 
-Jeronimo Campuzano 
-
-Class number 7308
-
-OS: Ubuntu 24.04.2 LTS x86_64 
-Programming languages: C++ 
-Compiler version: g++ 13.3.0
+# 📌 Project README
 
 
-Running 
+## 👨‍🎓 Students
+- **Andres Perez**  
+- **Jeronimo Campuzano** 
+
+## 📚 Class Information
+- **Class Number:** 7308  
+
+## 💻 System Information
+- **OS:** Ubuntu 24.04.2 LTS x86_64  
+- **Programming Language:** C++  
+- **Compiler Version:** g++ 13.3.0  
+
+---
+
+## 🚀 Running 
+
 
 
 Explanation
