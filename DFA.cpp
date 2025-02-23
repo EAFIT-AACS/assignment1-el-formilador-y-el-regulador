@@ -1,79 +1,84 @@
-#include <vector>
-#include <iostream>
-#include <algorithm>
-#include <utility>
+#include "DFA.h"
 
-using namespace std;
+DFA::DFA(vector<string> q, vector<string> f, vector<char> sigma, vector<tuple<string, string, string>> phi)
+{
+    states = q;
+    finals = f;
+    alphabet = sigma;
+    transition = phi;
+}
 
-class DFA {
-    private:
-        vector<string> states;
-        vector<string> finals;
-        vector<char> alphabet;
-        vector<pair<string, string>> equivalentStates;
-        
-    
-    public: 
-        DFA(vector<string> q, vector<string> f, vector<char> sigma) {
-            states = q;
-            finals = f;
-            alphabet = sigma;
+vector<string> DFA::getStates()
+{
+    return states;
+}
+
+vector<string> DFA::getFinals()
+{
+    return finals;
+}
+
+vector<char> DFA::getAlphabet()
+{
+    return alphabet;
+}
+
+/*
+vector<string> DFA::getEquivalentStates() {
+    return equivalentStates;
+}
+*/
+
+/*
+vector<tuple<string, string, string>> DFA::getTransition() {
+    return transition;
+}
+*/
+
+void DFA::findEquivalentStates() 
+{
+    vector<pair<string, string>> statePairs;
+    // Step 1: Create a vector filled with all the pairs that don't contain EXACTLY
+    // one Acceptance State
+    for (int i = 0; i < states.size(); i++)
+    {
+        for (int j = i + 1; j < states.size(); j++)
+        {
+            if (find(finals.begin(), finals.end(), states[i]) != finals.end() ||
+                find(finals.begin(), finals.end(), states[j]) != finals.end())
+            {
+                continue;
+            }
+            statePairs.push_back(make_pair(states[i], states[j]));
         }
-      
-        
-        /*
-        void addState(string state) {
-            states.push_back(state);
-        }
-        
-        void addFinal(string final) {
-            finals.push_back(final);
-        }
+    }
 
-        void addAlphabet(char letter) {
-            alphabet.push_back(letter);
-        } 
-        */ 
+    // Paso 2: Eliminar todas las parejas que nos lleven a una pareja marcada tras recibir alguna cadena
+    vector<pair<string, string>> prevPairs = statePairs;
 
-        vector<string> getStates() {
-            return states;
-        }
-        
-        vector<string> getFinals() {
-            return finals;
-        }
-
-        vector<char> getAlphabet() {
-            return alphabet;
-        }
-
-        /*
-        vector<string> getEquivalentStates() {
-            return equivalentStates;
-        }
-        */
-
-        void findEquivalentStates() {
-            vector<string, string> statePairs;
-
-            // Paso 0: Crear todas las parejas posibles entre estados
-            for (auto iterador1 = states.begin(); iterador1 != states.end(); ++iterador1) {
-                for (auto iterador2 = next(iterador1); iterador2 != states.end(); ++iterador2) {
-                    if (find(finals.begin(), finals.end(), *iterador1) != finals.end() || 
-                        find(finals.begin(), finals.end(), *iterador2) != finals.end()) {
-                        continue;
-                    }
-                    statePairs.push_back(make_pair(*iterador1, *iterador2));
+    // Tomar una pareja de 'statePairs', y eliminarla de prevPairs si, al aplicar la transicion, termina en alguna pareja que no este en
+    // 'statePairs'
+    do {
+        statePairs = prevPairs;
+        for (int i = 0; i < prevPairs.size(); i++) {
+            for (int j = 0; j < alphabet.size(); j++) {
+                if(find(prevPairs.begin(), prevPairs.end(), make_pair(transitionFunction(prevPairs[i].first, alphabet[j]), transitionFunction(prevPairs[i].second, alphabet[j]))) != prevPairs.end()) {
+                    prevPairs.erase(prevPairs.begin() + i);
                 }
             }
-
-            // Paso 1: Eliminar de la vectora las parejas donde hay SOLO un estado final
-            // Solucioado en el paso 0
-
-            // Paso 2: Eliminar todas las parejas que nos lleven a una pareja marcada tras recibir alguna cadena
-            
-            // Paso 3: Repetir el Paso 2 hasta que no se marquen mas parejas
-
-            // Paso 4: Llenar la vectora del atributo "equivalentStates" con las parejas no marcadas
         }
-};
+    } while (prevPairs != statePairs);
+    // Paso 3: Repetir el Paso 2 hasta que no se marquen mas parejas
+
+    // Paso 4: Llenar el vector del atributo "equivalentStates" con las parejas no marcadas
+}
+
+string DFA::transitionFunction(string state, char symbol) {
+    char transit;
+    for (int i = 0; i < transition.size(); i++) {
+        transit = get<1>(transition[i])[0];
+        if (get<0>(transition[i]) == state && transit == symbol) {
+            return get<2>(transition[i]);
+        }
+    }
+}
