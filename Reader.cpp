@@ -97,12 +97,10 @@ vector<DFA> Reader::read(string fileRoute)
 
 
             DFA newDFA = DFA(states, finals, alphabet, transitions);
+            cases.push_back(newDFA);
         }
 
-        while (std::getline(file, line))
-        {
-            cout << line << endl;
-        }
+        
 
         file.close();
     }
