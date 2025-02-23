@@ -1,54 +1,116 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
+#include "Reader.h"
 
+vector<DFA> Reader::read(string fileRoute)
+{
 
-using namespace std;
+    vector<DFA> cases;
+    int numCases;
 
-#include "DFA.cpp"
+    ifstream file;
+    string line;
+    string word;
 
+    try
+    {
+        file.open(fileRoute);
 
+        if (!file)
+        {
+            throw "Could not open the file. Please check if the txt file exists.";
+        }
 
-class Reader {
-    public:
+        // Procces file
 
-        static vector<DFA> read(string fileRoute){
+        // Number of cases
+        if (getline(file, line))
+        {
+            numCases = stoi(line);
+        }
+
+        for (int i = 0; i < numCases; i++)
+        {
+
+            // set states
+            getline(file, line);
+            vector<string> states;
+            istringstream iss1(line);
+            word;
+
+            while (iss1 >> word)
+            {
+                states.push_back(word);
+            }
+
             
-            vector<DFA> cases;  
-            int numCases;
 
-            ifstream file;
-            string line;
-
-            try {
-                file.open(fileRoute);
-
-                if (!file) {
-                    throw "Could not open the file. Please check if the txt file exists.";
-                }
+            // set alphabet
+            getline(file, line);
+            vector<char> alphabet;
+            istringstream iss3(line);
+            word;
+            while (iss3 >> word)
+            {
+                alphabet.push_back(word[0]);
+            }
 
 
-                //Procces file
+            // set finals
+            getline(file, line);
+            vector<string> finals;
+            istringstream iss2(line);
+            word;
 
-                //Number of cases
-                if (getline(file, line)) {
-                    numCases = stoi(line);
-                }
-
-                while (std::getline(file, line)) {
-                    cout << line << endl;
-                }
-
-                file.close();
-            } catch (const char* errorMsg) {
-                cerr << "Exception: " << errorMsg << endl;
-            } catch (...) {
-                cerr << "An unknown error occurred." << endl;
+            while (iss2 >> word)
+            {
+                finals.push_back(word);
             }
 
 
 
-            return cases;
+            // set transitions
+            vector<tuple<string, string, string>> transitions;
+
+            // loop for states
+            for (int k = 0; k < states.size(); k++)
+            {
+
+                // get the raw line and set it in a vector
+                getline(file, line);
+                vector<string> rawTransitions;
+                istringstream iss4(line);
+                word;
+                while (iss4 >> word)
+                {
+                    rawTransitions.push_back(word);
+                }
+
+                //loop for alphabet
+                for (int j = 0; j < alphabet.size(); j++)
+                {   string s(1, alphabet[j]);
+                    tuple<string, string, string> transition = make_tuple(rawTransitions[0], s, rawTransitions[j + 1]);
+                    transitions.push_back(transition);
+                }
+
+            }
+
+            DFA newDFA = DFA(states, finals, alphabet, transitions);
         }
-};
+
+        while (std::getline(file, line))
+        {
+            cout << line << endl;
+        }
+
+        file.close();
+    }
+    catch (const char *errorMsg)
+    {
+        cerr << "Exception: " << errorMsg << endl;
+    }
+    catch (...)
+    {
+        cerr << "An unknown error occurred." << endl;
+    }
+
+    return cases;
+}
