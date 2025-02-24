@@ -83,7 +83,7 @@ void DFA::findEquivalentStates()
                         destroy = false;
                     }
 
-                    break;
+
                 }
             }
             if (destroy)
