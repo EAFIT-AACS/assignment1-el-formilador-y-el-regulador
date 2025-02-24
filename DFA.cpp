@@ -46,7 +46,7 @@ void DFA::findEquivalentStates()
     {
         for (int j = i + 1; j < states.size(); j++)
         {
-            if (find(finals.begin(), finals.end(), states[i]) != finals.end() ||
+            if (find(finals.begin(), finals.end(), states[i]) != finals.end() ^
                 find(finals.begin(), finals.end(), states[j]) != finals.end())
             {
                 continue;
@@ -61,14 +61,35 @@ void DFA::findEquivalentStates()
 
     // Tomar una pareja de 'statePairs', y eliminarla de prevPairs si, al aplicar la transicion, termina en alguna pareja que no este en
     // 'statePairs'
+
+    pair<string, string> pairToDisect;
+
     do {
         statePairs = prevPairs;
         for (int i = 0; i < prevPairs.size(); i++) {
+
+
+
+            bool destroy = false;
             for (int j = 0; j < alphabet.size(); j++) {
-                if(find(prevPairs.begin(), prevPairs.end(), make_pair(transitionFunction(prevPairs[i].first, alphabet[j]), transitionFunction(prevPairs[i].second, alphabet[j]))) != prevPairs.end()) {
-                    prevPairs.erase(prevPairs.begin() + i);
+                pairToDisect = make_pair(transitionFunction(prevPairs[i].first, alphabet[j]), transitionFunction(prevPairs[i].second, alphabet[j]));
+                if ((find(prevPairs.begin(), prevPairs.end(), pairToDisect) == prevPairs.end()) ||
+                    (find(prevPairs.begin(), prevPairs.end(), make_pair(pairToDisect.second, pairToDisect.first)) == prevPairs.end())) {
+                    destroy = true;
+                    if (pairToDisect.first == pairToDisect.second) {
+                        destroy=false;
+                    }
+                    
+                    break;
                 }
+            } 
+            if (destroy) {
+                prevPairs.erase(prevPairs.begin() + i);
+                --i;
             }
+
+
+
         }
     } while (prevPairs != statePairs);
 
@@ -81,7 +102,9 @@ string DFA::transitionFunction(string state, char symbol) {
     for (int i = 0; i < transition.size(); i++) {
         transit = get<1>(transition[i])[0];
         if (get<0>(transition[i]) == state && transit == symbol) {
-            return get<2>(transition[i]);
+            string newState = get<2>(transition[i]);
+            return newState;
+
         }
     }
     return "Error";
