@@ -1,5 +1,6 @@
 #include "Reader.h"
 
+// Function that reads the file and returns a vector full of the DFAs specified in the file
 vector<DFA> Reader::read(string fileRoute)
 {
 
@@ -10,8 +11,10 @@ vector<DFA> Reader::read(string fileRoute)
     string line;
     string word;
 
+    // Try catch block to handle file exceptions
     try
     {
+        // Open file
         file.open(fileRoute);
 
         if (!file)
@@ -30,16 +33,13 @@ vector<DFA> Reader::read(string fileRoute)
         for (int i = 0; i < numCases; i++)
         {
 
-            // set states
+            // Set states
             getline(file, line);
             int numStates = stoi(line);
             vector<string> states;
-            
-            //     states.push_back(word);
 
-            
 
-            // set alphabet
+            // Set alphabet
             getline(file, line);
             vector<char> alphabet;
             istringstream iss3(line);
@@ -49,8 +49,7 @@ vector<DFA> Reader::read(string fileRoute)
                 alphabet.push_back(word[0]);
             }
 
-
-            // set finals
+            // Set finals
             getline(file, line);
             vector<string> finals;
             istringstream iss2(line);
@@ -61,11 +60,8 @@ vector<DFA> Reader::read(string fileRoute)
                 finals.push_back(word);
             }
 
-
-
-            // set transitions
+            // Set transitions
             vector<tuple<string, string, string>> transitions;
-
 
             // loop for states
             for (int k = 0; k < numStates; k++)
@@ -81,26 +77,24 @@ vector<DFA> Reader::read(string fileRoute)
                     rawTransitions.push_back(word);
                 }
 
-                //loop for alphabet
+                // loop for alphabet
                 for (int j = 0; j < alphabet.size(); j++)
-                {   string s(1, alphabet[j]);
+                {
+                    string s(1, alphabet[j]);
                     tuple<string, string, string> insert = make_tuple(rawTransitions[0], s, rawTransitions[j + 1]);
-                    
+                    // Fill transitions
                     transitions.push_back(insert);
                 }
-                states.push_back(rawTransitions[0]);
 
+                // Fill states
+                states.push_back(rawTransitions[0]);
             }
 
-
-            //Fill states
-
-
+            
+            // Create new DFA
             DFA newDFA = DFA(states, finals, alphabet, transitions);
             cases.push_back(newDFA);
         }
-
-        
 
         file.close();
     }

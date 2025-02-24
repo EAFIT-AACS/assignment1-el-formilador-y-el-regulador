@@ -14,6 +14,7 @@ using namespace std;
 class Reader
 {
 public:
+    // Function that reads the file
     static vector<DFA> read(string fileRoute);
 };
 

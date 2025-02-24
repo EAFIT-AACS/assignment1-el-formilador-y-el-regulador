@@ -35,8 +35,8 @@ public:
     vector<string> getFinals();
     vector<char> getAlphabet();
     void getEquivalentStates();
-    vector<tuple<string, string, string>> getTransition();
 
+    // Function to check for Equivalence between two states and store them on the respective attribute
     void findEquivalentStates();
     string transitionFunction(string state, char symbol);
 };
