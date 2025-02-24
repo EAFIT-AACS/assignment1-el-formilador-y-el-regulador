@@ -6,20 +6,29 @@ using namespace std;
 
 int main()
 {
-    cout << "Welcome to the DFA Equivalence Checker" << endl;
-    // print beatifully interface in asscii
+    // Print beautiful interface in ascii
+    cout << R"(
+███████╗ ██████╗     ███████╗████████╗ █████╗ ████████╗███████╗███████╗
+██╔════╝██╔═══██╗    ██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝██╔════╝
+█████╗  ██║   ██║    ███████╗   ██║   ███████║   ██║   █████╗  ███████╗
+██╔══╝  ██║▄▄ ██║    ╚════██║   ██║   ██╔══██║   ██║   ██╔══╝  ╚════██║
+███████╗╚██████╔╝    ███████║   ██║   ██║  ██║   ██║   ███████╗███████║
+╚══════╝ ╚══▀▀═╝     ╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚══════╝
+            )" << std::endl;
 
-    // read file
+    cout << "Welcome to the DFA Equivalence Checker" << endl << endl;
+
+    // Read file
     vector<DFA> cases = Reader::read("input.txt");
+
+    // Iterate over the cases
     for (int i = 0; i < cases.size(); i++)
     {
         cout << "Case " << i + 1 << endl;
-        cout << "States: ";
         cases[i].findEquivalentStates();
         cases[i].getEquivalentStates();
+        cout << endl;
     }
-    
 
-    
     return 0;
 }
