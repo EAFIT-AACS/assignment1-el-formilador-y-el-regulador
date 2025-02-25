@@ -14,12 +14,20 @@
 ███████║   ██║   ██║  ██║   ██║   ███████╗███████║
 ╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚══════╝
 ```
-## 👨‍🎓 Students
-- **Andres Perez**  
-- **Jeronimo Campuzano** 
+
+
+## 📖 Description
+- This project implement the algorithm proposed by kozen in lecture 14 to find equivalent states in a DFA
 
 ## 📚 Class Information
 - **Class Number:** 7308  
+
+## 👨‍🏫 Teacher
+- **Adolfo Andrés Castro Sánchez** 
+
+## 👨‍🎓 Students
+- **Jeronimo Campuzano Castaño** 
+- **Andres Perez Quinchia**  
 
 ## 💻 System Information
 - **OS:** Ubuntu 24.04.2 LTS x86_64  
@@ -29,13 +37,22 @@
 ---
 
 ## 🚀 Running 
-- **Compilation** To compile the project use a c++ compiler to get the binary file, ensure to include all the .cpp files, here is an example with g++ in linux
+- **Compilation** To compile the project, use a C++ compiler to produce the binary file. Ensure to include all the .cpp files, here is an example with g++ in linux
 ```bash
 g++ -o a main.cpp DFA.cpp Reader.cpp
 ```
-- **Execution** After this, please note that the input file is exactly named like this and the format is the proper one: "input.txt", in this repository we include a file example so you can test it
+- **Execution** After this you will have the binary file in the same location you ran the comand.
+
 ```bash
 ./a
 ```
+
+- Important:  Please note the following points to run the program
+
+1. Input file exactly named like this "input.txt"
+2. The format of the input file is the proper one and is in the same directory as the binary
+3. In this repository we include a file example so you can test it.
+
+
 
 Explanation
