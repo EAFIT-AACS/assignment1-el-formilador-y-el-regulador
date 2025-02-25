@@ -77,7 +77,7 @@ vector<DFA> Reader::read(string fileRoute)
                     rawTransitions.push_back(word);
                 }
 
-                // loop for alphabet
+                // loop for alphabet 
                 for (int j = 0; j < alphabet.size(); j++)
                 {
                     string s(1, alphabet[j]);
