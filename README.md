@@ -58,6 +58,7 @@ g++ -o a main.cpp DFA.cpp Reader.cpp Printer.cpp
 
 ## 🚀 Explanation
 - Read file
+  
 First of all, we need to read the input.txt file. We do this using the Reader.cpp class, which will open the file using the provided path and process the first line to determine the number of cases to analyze. This value represents the number of automata and the number of times the following structure will be repeated.
 
 The first line will indicate the number of cases the automaton presents, followed by another line showing the alphabet it can process. Next, there will be a list of final states, and finally, the transition function will be processed using this structure. Each transition will be stored as a triplet in the format (starting state, processed character, destination state), allowing us to analyze a table with n characters and m states.
