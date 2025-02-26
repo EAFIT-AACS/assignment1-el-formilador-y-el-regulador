@@ -61,7 +61,38 @@ g++ -o a main.cpp DFA.cpp Reader.cpp Printer.cpp
   
 First of all, we need to read the input.txt file. We do this using the Reader.cpp class, which will open the file using the provided path and process the first line to determine the number of cases to analyze. This value represents the number of automata and the number of times the following structure will be repeated.
 
-The first line will indicate the number of cases the automaton presents, followed by another line showing the alphabet it can process. Next, there will be a list of final states, and finally, the transition function will be processed using this structure. Each transition will be stored as a triplet in the format (starting state, processed character, destination state), allowing us to analyze a table with n characters and m states.
+The first line will indicate the number of states the automaton presents, followed by another line showing the alphabet it can process. Next, there will be a list of final states, and finally, the transition function will be processed using this structure. Each transition will be stored as a triplet in the format (starting state, processed character, destination state), allowing us to analyze a table with n characters and m states.
+
+```cpp
+// Set transitions
+vector<tuple<string, string, string>> transitions;
+
+// loop for states
+for (int k = 0; k < numStates; k++)
+{
+    getline(file, line);
+    vector<string> rawTransitions;
+    istringstream iss4(line);
+    word;
+    while (iss4 >> word)
+    {
+        rawTransitions.push_back(word);
+    }
+
+    // loop for alphabet 
+    for (int j = 0; j < alphabet.size(); j++)
+    {
+        string s(1, alphabet[j]);
+        tuple<string, string, string> insert = make_tuple(rawTransitions[0], s, rawTransitions[j + 1]);
+        // Fill transitions
+        transitions.push_back(insert);
+    }
+
+    // Fill states
+    states.push_back(rawTransitions[0]);
+}
+```
+
 
 - Algorithm
 
