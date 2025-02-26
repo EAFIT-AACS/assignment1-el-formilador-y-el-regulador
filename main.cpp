@@ -3,7 +3,7 @@ using namespace std;
 
 #include "DFA.h"
 #include "Reader.h"
-
+#include "Printer.h"
 int main()
 {
 
@@ -12,14 +12,15 @@ int main()
     // Read file
     vector<DFA> cases = Reader::read("input.txt");
 
-    // Iterate over the cases
+    // Print the DFA
     for (int i = 0; i < cases.size(); i++)
     {
-        cout << "Case " << i + 1 << endl;
+        Printer::printBar();
+        cout << endl << "Case" << i + 1 << endl;
         cases[i].findEquivalentStates();
-        cases[i].getEquivalentStates();
-        cout << endl;
-    }
+        Printer::printDFA(cases[i]);
+        Printer::printBar();
 
+    }
     return 0;
 }

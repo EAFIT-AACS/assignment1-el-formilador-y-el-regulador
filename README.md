@@ -56,7 +56,7 @@ g++ -o a main.cpp DFA.cpp Reader.cpp Printer.cpp
 
 
 
-## 🚀 Explanation
+## 📖 Explanation
 - Read file
   
 First of all, we need to read the input.txt file. We do this using the Reader.cpp class, which will open the file using the provided path and process the first line to determine the number of cases to analyze. This value represents the number of automata and the number of times the following structure will be repeated.
